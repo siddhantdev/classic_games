@@ -1,14 +1,16 @@
+#pragma once
+
 #include <string>
 
 class Game {
     public:
-        Game();
+        Game() = default;
 
-        void Draw();
+        virtual void Draw() =0;
 
-        void HandleInput();
+        virtual void HandleInput() =0;
 
-        void Update();
+        virtual void Update() =0;
 
-        std::string getTitle();
+        virtual std::string getTitle() =0;
 };

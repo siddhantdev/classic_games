@@ -1,4 +1,8 @@
 #include "raylib.h"
+#include "game.h"
+#include "pong.h"
+
+using namespace std;
 
 int main(void)
 {
@@ -8,14 +12,13 @@ int main(void)
     InitWindow(screenWidth, screenHeight, "Classic Games");
     SetTargetFPS(60);
 
+    Game* game = new Pong();
+
     while (!WindowShouldClose())
     {
-        BeginDrawing();
-
-        ClearBackground(SKYBLUE);
-        DrawCircle(screenWidth/2, screenHeight/2, screenWidth/10.0, RED);
-
-        EndDrawing();
+        game->HandleInput();
+        game->Update();
+        game->Draw();
     }
 
     CloseWindow();
