@@ -27,6 +27,7 @@ class Pong : public Game {
                 float x, y;
                 int vx, vy;
                 int radius;
+                float reset_counter;
 
                 inline void Draw() {
                     DrawCircle(x, y, radius, WHITE);

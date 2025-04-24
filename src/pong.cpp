@@ -3,18 +3,19 @@
 Pong::Pong() {
     m_ball.radius = 20;
     m_ball.Reset();
+    m_ball.reset_counter = 0.2;
 
     m_player_paddle.width = 25;
     m_player_paddle.height = 120;
     m_player_paddle.x = GetScreenWidth() - m_player_paddle.width - 10;
     m_player_paddle.y = (GetScreenHeight() - m_player_paddle.height) / 2.0;
-    m_player_paddle.velocity = 8;
+    m_player_paddle.velocity = 300;
 
     m_cpu_paddle.width = 25;
     m_cpu_paddle.height = 120;
     m_cpu_paddle.x = 10;
     m_cpu_paddle.y = (GetScreenHeight() - m_cpu_paddle.height) / 2.0;
-    m_cpu_paddle.velocity = 8;
+    m_cpu_paddle.velocity = 300;
 
     m_player_score = 0;
     m_cpu_score = 0;
@@ -55,13 +56,20 @@ void Pong::Ball::Reset() {
 
     int dx[2] = {-1, 1};
 
-    vx = 7 * dx[GetRandomValue(0, 1)];
-    vy = 7 * dx[GetRandomValue(0, 1)];
+    vx = 350 * dx[GetRandomValue(0, 1)];
+    vy = 280 * dx[GetRandomValue(0, 1)];
+
+    reset_counter = 1.0;
 }
 
 void Pong::Ball::Update(int& player_score, int& cpu_score) {
-    x += vx;
-    y += vy;
+    if (reset_counter > 0) {
+        reset_counter -= GetFrameTime();
+        return;
+    }
+
+    x += vx * GetFrameTime();
+    y += vy * GetFrameTime();
 
     if (x + radius >= GetScreenWidth()) {
         ++cpu_score;
@@ -79,11 +87,11 @@ void Pong::Ball::Update(int& player_score, int& cpu_score) {
 
 void Pong::PlayerPaddle::Update() {
     if (IsKeyDown(KEY_UP)) {
-        y -= velocity;
+        y -= velocity * GetFrameTime();
     }
 
     if (IsKeyDown(KEY_DOWN)) {
-        y += velocity;
+        y += velocity * GetFrameTime();
     }
 
     if (y <= 0)
@@ -94,9 +102,9 @@ void Pong::PlayerPaddle::Update() {
 
 void Pong::CPUPaddle::Update(const Pong::Ball& ball) {
     if (y + height / 2.0 > ball.y) {
-        y -= velocity;
+        y -= velocity * GetFrameTime();
     } else {
-        y += velocity;
+        y += velocity * GetFrameTime();
     }
 
     if (y <= 0)
