@@ -19,6 +19,13 @@ Pong::Pong() {
 
     m_player_score = 0;
     m_cpu_score = 0;
+    m_paused = false;
+}
+
+void Pong::HandleInput() {
+    if (IsKeyPressed(KEY_ESCAPE)) {
+        m_paused ^= true;
+    }
 }
 
 void Pong::Draw() {
@@ -31,10 +38,26 @@ void Pong::Draw() {
     DrawText(TextFormat("%i", m_cpu_score), GetScreenWidth() / 4, 20, 80, WHITE);
     DrawText(TextFormat("%i", m_player_score), 3 * GetScreenWidth() / 4, 20, 80, WHITE);
 
+    if (m_paused) {
+        int play_result = GuiButton(Rectangle{300, 340, 200, 50}, "Continue");
+        int exit_result = GuiButton(Rectangle{300, 410, 200, 50}, "Exit");
+
+        if (play_result) {
+            m_paused = false; 
+            return;
+        }
+
+        if (exit_result) {
+            CloseWindow();
+        }
+    }
+
     EndDrawing();
 }
 
 void Pong::Update() {
+    if (m_paused) return;
+
     m_ball.Update(m_player_score, m_cpu_score);
     m_player_paddle.Update();
     m_cpu_paddle.Update(m_ball);

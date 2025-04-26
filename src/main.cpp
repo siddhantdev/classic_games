@@ -1,9 +1,9 @@
 #include "raylib.h"
-#define RAYGUI_IMPLEMENTATION
-#include "raygui.h"
-
 #include "game.h"
 #include "pong.h"
+
+#define RAYGUI_IMPLEMENTATION
+#include "raygui.h"
 
 enum Screens {
     MainMenuScreen,
@@ -17,8 +17,6 @@ void DrawMainMenu() {
 
     ClearBackground(RAYWHITE);
 
-    GuiSetStyle(DEFAULT, TEXT_SIZE, 25);
-    GuiSetStyle(DEFAULT, TEXT_COLOR_NORMAL, 0x0000FF);
     DrawText("Classic Games", 250, 250, 45, BLACK);
 
     int play_result = GuiButton(Rectangle{300, 340, 200, 50}, "Play");
@@ -43,6 +41,10 @@ int main(void)
 
     InitWindow(screenWidth, screenHeight, "Classic Games");
     SetTargetFPS(60);
+    SetExitKey(KEY_NULL);
+
+    GuiSetStyle(DEFAULT, TEXT_SIZE, 25);
+    GuiSetStyle(DEFAULT, TEXT_COLOR_NORMAL, 0x0000FF);
 
     Game* game = new Pong();
 

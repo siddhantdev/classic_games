@@ -2,6 +2,7 @@
 
 #include "game.h"
 #include "raylib.h"
+#include "raygui.h"
 
 class Pong : public Game {
     public:
@@ -9,7 +10,7 @@ class Pong : public Game {
 
         void Draw();
 
-        inline void HandleInput() {}
+        void HandleInput();
 
         void Update();
 
@@ -22,6 +23,8 @@ class Pong : public Game {
         int m_cpu_score;
     
     private:
+        bool m_paused;
+
         class Ball {
             public:
                 float x, y;
