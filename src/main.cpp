@@ -55,6 +55,7 @@ int main(void)
                 DrawMainMenu();
                 break;
             case GameScreen:
+                SetWindowTitle(game->getTitle().c_str());
                 game->HandleInput();
                 game->Update();
                 game->Draw();
