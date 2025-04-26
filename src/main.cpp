@@ -1,8 +1,40 @@
 #include "raylib.h"
+#define RAYGUI_IMPLEMENTATION
+#include "raygui.h"
+
 #include "game.h"
 #include "pong.h"
 
-using namespace std;
+enum Screens {
+    MainMenuScreen,
+    GameScreen
+};
+
+Screens curr_screen = MainMenuScreen;
+
+void DrawMainMenu() {
+    BeginDrawing();
+
+    ClearBackground(RAYWHITE);
+
+    GuiSetStyle(DEFAULT, TEXT_SIZE, 25);
+    GuiSetStyle(DEFAULT, TEXT_COLOR_NORMAL, 0x0000FF);
+    DrawText("Classic Games", 250, 250, 45, BLACK);
+
+    int play_result = GuiButton(Rectangle{300, 340, 200, 50}, "Play");
+    int exit_result = GuiButton(Rectangle{300, 410, 200, 50}, "Exit");
+
+    if (play_result) {
+        curr_screen = GameScreen;
+        return;
+    }
+
+    if (exit_result) {
+        CloseWindow();
+    }
+
+    EndDrawing();
+}
 
 int main(void)
 {
@@ -16,9 +48,16 @@ int main(void)
 
     while (!WindowShouldClose())
     {
-        game->HandleInput();
-        game->Update();
-        game->Draw();
+        switch (curr_screen) {
+            case MainMenuScreen:
+                DrawMainMenu();
+                break;
+            case GameScreen:
+                game->HandleInput();
+                game->Update();
+                game->Draw();
+                break;
+        }
     }
 
     CloseWindow();
