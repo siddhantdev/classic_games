@@ -17,7 +17,8 @@ void DrawMainMenu() {
 
     ClearBackground(RAYWHITE);
 
-    DrawText("Classic Games", 250, 250, 45, BLACK);
+    int title_width = MeasureText("Classic Games", 45);
+    DrawText("Classic Games", (GetScreenWidth() - title_width) / 2, 250, 45, BLACK);
 
     int play_result = GuiButton(Rectangle{300, 340, 200, 50}, "Play");
     int exit_result = GuiButton(Rectangle{300, 410, 200, 50}, "Exit");
