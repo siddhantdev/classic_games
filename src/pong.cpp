@@ -7,14 +7,14 @@ Pong::Pong() {
 
     m_player_paddle.width = 25;
     m_player_paddle.height = 120;
-    m_player_paddle.x = GetScreenWidth() - m_player_paddle.width - 10;
-    m_player_paddle.y = (GetScreenHeight() - m_player_paddle.height) / 2.0;
+    m_player_paddle.x = Constants::screen_width - m_player_paddle.width - 10;
+    m_player_paddle.y = (Constants::screen_height - m_player_paddle.height) / 2.0;
     m_player_paddle.velocity = 300;
 
     m_cpu_paddle.width = 25;
     m_cpu_paddle.height = 120;
     m_cpu_paddle.x = 10;
-    m_cpu_paddle.y = (GetScreenHeight() - m_cpu_paddle.height) / 2.0;
+    m_cpu_paddle.y = (Constants::screen_height - m_cpu_paddle.height) / 2.0;
     m_cpu_paddle.velocity = 300;
 
     m_player_score = 0;
@@ -35,8 +35,8 @@ void Pong::Draw() {
     m_player_paddle.Draw();
     m_cpu_paddle.Draw();
 
-    DrawText(TextFormat("%i", m_cpu_score), GetScreenWidth() / 4, 20, 80, WHITE);
-    DrawText(TextFormat("%i", m_player_score), 3 * GetScreenWidth() / 4, 20, 80, WHITE);
+    DrawText(TextFormat("%i", m_cpu_score), Constants::screen_width / 4, 20, 80, WHITE);
+    DrawText(TextFormat("%i", m_player_score), 3 * Constants::screen_width / 4, 20, 80, WHITE);
 
     if (m_paused && DrawPauseMenu()) {
         m_paused = false;
@@ -64,8 +64,8 @@ void Pong::Update() {
 }
 
 void Pong::Ball::Reset() {
-    x = GetScreenWidth() / 2.0;
-    y = GetScreenHeight() / 2.0;
+    x = Constants::screen_width / 2.0;
+    y = Constants::screen_height / 2.0;
 
     int dx[2] = {-1, 1};
 
@@ -84,7 +84,7 @@ void Pong::Ball::Update(int& player_score, int& cpu_score) {
     x += vx * GetFrameTime();
     y += vy * GetFrameTime();
 
-    if (x + radius >= GetScreenWidth()) {
+    if (x + radius >= Constants::screen_width) {
         ++cpu_score;
         Reset();
     }
@@ -93,7 +93,7 @@ void Pong::Ball::Update(int& player_score, int& cpu_score) {
         Reset();
     }
 
-    if (y + radius >= GetScreenHeight() || y - radius <= 0) {
+    if (y + radius >= Constants::screen_height || y - radius <= 0) {
         vy *= -1;
     }
 }
@@ -109,8 +109,8 @@ void Pong::PlayerPaddle::Update() {
 
     if (y <= 0)
         y = 0;
-    if (y + height >= GetScreenHeight())
-        y = GetScreenHeight() - height;
+    if (y + height >= Constants::screen_height)
+        y = Constants::screen_height - height;
 }
 
 void Pong::CPUPaddle::Update(const Pong::Ball& ball) {
@@ -122,6 +122,6 @@ void Pong::CPUPaddle::Update(const Pong::Ball& ball) {
 
     if (y <= 0)
         y = 0;
-    if (y + height >= GetScreenHeight())
-        y = GetScreenHeight() - height;
+    if (y + height >= Constants::screen_height)
+        y = Constants::screen_height - height;
 }

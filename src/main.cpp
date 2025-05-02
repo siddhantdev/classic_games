@@ -18,7 +18,7 @@ void DrawMainMenu() {
     ClearBackground(RAYWHITE);
 
     int title_width = MeasureText("Classic Games", 45);
-    DrawText("Classic Games", (GetScreenWidth() - title_width) / 2, 300, 45, BLACK);
+    DrawText("Classic Games", (Constants::screen_width - title_width) / 2, 300, 45, BLACK);
 
     int play_result = GuiButton(Rectangle{300, 370, 200, 50}, "Play");
     int exit_result = GuiButton(Rectangle{300, 430, 200, 50}, "Exit");
@@ -37,10 +37,7 @@ void DrawMainMenu() {
 
 int main(void)
 {
-    const int screenWidth = 800;
-    const int screenHeight = 800;
-
-    InitWindow(screenWidth, screenHeight, "Classic Games");
+    InitWindow(Constants::screen_width, Constants::screen_height, "Classic Games");
     SetTargetFPS(60);
     SetExitKey(KEY_NULL);
 
