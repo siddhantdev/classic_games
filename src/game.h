@@ -7,6 +7,8 @@
 
 class Game {
     public:
+        bool m_should_quit = false;
+
         Game() = default;
 
         virtual void Draw() =0;
@@ -31,7 +33,7 @@ class Game {
             }
 
             if (exit_result) {
-                CloseWindow();
+                m_should_quit = true;
             }
 
             return false;

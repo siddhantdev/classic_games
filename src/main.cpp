@@ -11,6 +11,7 @@ enum Screens {
 };
 
 Screens curr_screen = MainMenuScreen;
+bool should_quit = false;
 
 void DrawMainMenu() {
     BeginDrawing();
@@ -29,7 +30,7 @@ void DrawMainMenu() {
     }
 
     if (exit_result) {
-        CloseWindow();
+        should_quit = true;
     }
 
     EndDrawing();
@@ -46,7 +47,7 @@ int main(void)
 
     Game* game = new Pong();
 
-    while (!WindowShouldClose())
+    while (!WindowShouldClose() && !should_quit && !game->m_should_quit)
     {
         switch (curr_screen) {
             case MainMenuScreen:
