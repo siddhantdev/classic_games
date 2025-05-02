@@ -1,8 +1,6 @@
 #pragma once
 
 #include "game.h"
-#include "raylib.h"
-#include "raygui.h"
 
 class Pong : public Game {
     public:

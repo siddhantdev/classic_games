@@ -38,23 +38,8 @@ void Pong::Draw() {
     DrawText(TextFormat("%i", m_cpu_score), GetScreenWidth() / 4, 20, 80, WHITE);
     DrawText(TextFormat("%i", m_player_score), 3 * GetScreenWidth() / 4, 20, 80, WHITE);
 
-    if (m_paused) {
-        DrawRectangle(200, 220, 400, 350, RAYWHITE);
-
-        int pause_width = MeasureText("Game Paused", 45);
-        DrawText("Game Paused", (GetScreenWidth() - pause_width) / 2, 300, 45, BLACK);
-
-        int play_result = GuiButton(Rectangle{300, 370, 200, 50}, "Continue");
-        int exit_result = GuiButton(Rectangle{300, 430, 200, 50}, "Exit");
-
-        if (play_result) {
-            m_paused = false; 
-            return;
-        }
-
-        if (exit_result) {
-            CloseWindow();
-        }
+    if (m_paused && DrawPauseMenu()) {
+        m_paused = false;
     }
 
     EndDrawing();
