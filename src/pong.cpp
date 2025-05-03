@@ -1,6 +1,6 @@
 #include "pong.h"
 
-Pong::Pong() {
+Pong::Pong(Screens& curr_screen) : Game(curr_screen) {
     m_ball.radius = 20;
     m_ball.Reset();
     m_ball.reset_counter = 0.2;

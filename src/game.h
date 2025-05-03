@@ -7,9 +7,9 @@
 
 class Game {
     public:
-        bool m_should_quit = false;
+        Screens& curr_screen;
 
-        Game() = default;
+        Game (Screens& screen) : curr_screen(screen) {};
 
         virtual void Draw() =0;
 
@@ -33,7 +33,7 @@ class Game {
             }
 
             if (exit_result) {
-                m_should_quit = true;
+                curr_screen = ExitScreen;
             }
 
             return false;

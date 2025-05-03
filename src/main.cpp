@@ -5,13 +5,7 @@
 #define RAYGUI_IMPLEMENTATION
 #include "raygui.h"
 
-enum Screens {
-    MainMenuScreen,
-    GameScreen
-};
-
 Screens curr_screen = MainMenuScreen;
-bool should_quit = false;
 
 void DrawMainMenu() {
     BeginDrawing();
@@ -30,7 +24,8 @@ void DrawMainMenu() {
     }
 
     if (exit_result) {
-        should_quit = true;
+        curr_screen = ExitScreen;
+        return;
     }
 
     EndDrawing();
@@ -45,9 +40,9 @@ int main(void)
     GuiSetStyle(DEFAULT, TEXT_SIZE, 25);
     GuiSetStyle(DEFAULT, TEXT_COLOR_NORMAL, 0x0000FF);
 
-    Game* game = new Pong();
+    Game* game = new Pong(curr_screen);
 
-    while (!WindowShouldClose() && !should_quit && !game->m_should_quit)
+    while (!WindowShouldClose() && curr_screen != ExitScreen)
     {
         switch (curr_screen) {
             case MainMenuScreen:
@@ -59,6 +54,8 @@ int main(void)
                 game->Update();
                 game->Draw();
                 break;
+            default:
+                  break;
         }
     }
 

@@ -4,7 +4,7 @@
 
 class Pong : public Game {
     public:
-        Pong();
+        Pong(Screens& curr_screen);
 
         void Draw();
 
